@@ -1,0 +1,50 @@
+version: '2'
+
+services:
+  constructor:
+    build:
+      dockerfile: ./Dockerfile-constructor
+      context: .
+    cpu_shares: 256
+    volumes:
+      - constructor_data:/cids_sep
+      - .:/cids_sep/development
+      - constructor_modules:/cids_sep/development/node_modules
+      - constructor_modules:/cids_sep/development/bower_components
+
+  wordpress:
+    image: wordpress:latest
+    volumes:
+      - wordpress_data:/var/www/html
+      - ./build:/var/www/html/wp-content/themes/cids_sep
+    ports:
+      - 8000:80
+    networks:
+      - cids
+    environment:
+      - WORDPRESS_DB_HOST=database
+      - WORDPRESS_DB_USER=cids_sep
+      - WORDPRESS_DB_PASSWORD=cids_sep
+      - WORDPRESS_DB_NAME=wordpress
+      # - WORDPRESS_TABLE_PREFIX= // set this up if we have matching problems from the prod dump
+  database:
+    image: mariadb:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=cids_sep
+      - MYSQL_USER=cids_sep
+      - MYSQL_PASSWORD=cids_sep
+      - MYSQL_DATABASE=wordpress
+    networks:
+      - cids
+    volumes:
+      - database_data:/var/lib/mysql
+
+networks:
+  cids:
+    external: false
+
+volumes:
+  constructor_data:
+  constructor_modules:
+  database_data:
+  wordpress_data:

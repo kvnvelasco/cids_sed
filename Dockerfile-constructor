@@ -1,0 +1,10 @@
+FROM node:6.2.2
+
+COPY . /cids_sep/development
+
+WORKDIR /cids_sep/development
+
+RUN npm install -g gulp bower
+RUN bower install --allow-root && npm install
+
+CMD gulp watch

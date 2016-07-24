@@ -1,0 +1,22 @@
+{
+  "name": "cids_sep",
+  "description": "",
+  "main": "gulpfile.js",
+  "authors": [
+    "Kevin Velasco"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/kvnvelasco/cids_sep",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8"
+  }
+}
